@@ -58,6 +58,7 @@ export class CarsService {
         carDB = {
           ...carDB,
           ...updateCarDTO,
+          
           id
         }
         return carDB
@@ -65,6 +66,19 @@ export class CarsService {
       return car
     })
     return carDB
+  }
+
+  delete(id:string) {
+    if(id){
+      const carIndex = this.cars.findIndex(car => car.id === id);
+
+      if (carIndex === -1) {
+        throw new NotFoundException(`Car with ID ${id} not found`);
+      }
+    
+      const removedCar = this.cars.splice(carIndex, 1)[0];
+      return removedCar;
+    }
   }
 
 }
